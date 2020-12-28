@@ -1,6 +1,7 @@
-package view.model;
+package view.model.view.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import view.model.R;
 
 import android.os.Bundle;
 
