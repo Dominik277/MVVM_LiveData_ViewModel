@@ -1,4 +1,12 @@
 package view.model.di;
 
-public class MainActivityModule {
+import dagger.Module;
+import view.model.view.ui.MainActivity;
+
+@Module
+public abstract class MainActivityModule {
+
+    @ContributesAndroidInjector(moduler = FragmentBuildersModule.class)
+    abstract MainActivity contributeMainActivity();
+
 }
