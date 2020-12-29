@@ -5,6 +5,9 @@ import android.app.Application;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import view.model.MVVMApplication;
 
 public class AppInjector {
@@ -52,6 +55,27 @@ public class AppInjector {
 
                     }
                 });
+    }
+
+    private static void handleActivity(Activity activity){
+        if (activity instanceof HasSupportFragmentInjector){
+            AndroidInjection.inject(activity);
+        }
+
+        if (activity instanceof FragmentActivity){
+            ((FragmentActivity)activity).getSupportFragmentManager()
+                    .registerFragmentLifecycleCallbacks(
+                            new FragmentManager.FragmentLifecycleCallbacks() {
+                                @Override
+                                public void onFragmentCreated(@NonNull FragmentManager fm, @NonNull Fragment fragment, @Nullable Bundle savedInstanceState) {
+                                    super.onFragmentCreated(fm, fragment, savedInstanceState);
+                                    if (fragment instanceof Injectable){
+                                        AndroidSupportInjection.inject(fragment);
+                                    }
+                                }
+                            },true);
+        }
+
     }
 
 }
