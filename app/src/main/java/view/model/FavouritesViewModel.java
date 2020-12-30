@@ -89,6 +89,24 @@ public class FavouritesViewModel extends AndroidViewModel {
 
     public void removeFav(long id){
 
+        SQLiteDatabase db = mFavHelper.getWritableDatabase();
+        db.delete(
+                DbSettings.DBEntry.TABLE,
+                DbSettings.DBEntry._ID,
+                new String[]{Long.toString(id)}
+        );
+        db.close();
+
+        int index = -1;
+        for (int i=0; i<mFavs.size(); i++){
+            Favourites favourites = mFavs.get(i);
+            if (favourites.mId == id){
+                index = i;
+            }
+        }
+        if (index != -1){
+            mFavs.remove(index);
+        }
     }
 
 }
