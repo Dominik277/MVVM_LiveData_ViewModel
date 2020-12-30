@@ -3,10 +3,14 @@ package view.model;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
@@ -78,8 +82,38 @@ public class MainActivity extends AppCompatActivity {
 
     public class FavouritesAdapter extends ArrayAdapter<Favourites>{
 
+        private class ViewHolder{
+            TextView tvUrl;
+            TextView tvDate;
+        }
+
         public FavouritesAdapter(@NonNull Context context, int resource, List<Favourites> todos) {
             super(context, resource,todos);
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            Favourites favourites = getItem(position);
+            ViewHolder viewHolder;
+
+            if (convertView == null){
+                viewHolder = new ViewHolder();
+                LayoutInflater vi = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = vi.inflate(R.layout.list_item_row,parent,false);
+
+                viewHolder.tvUrl = convertView.findViewById(R.id.tvUrl);
+                viewHolder.tvDate = convertView.findViewById(R.id.tvDate);
+
+                convertView.setTag(R.id.VH,viewHolder);
+            }else {
+                viewHolder = (ViewHolder)convertView.getTag(R.id.VH);
+            }
+
+            viewHolder.tvUrl.setText(favourites.mUrl);
+            viewHolder.tvDate.setText((new Date(favourites.mDate).toString()));
+            convertView.setTag(R.id.POS, position);
+            return convertView;
         }
     }
 
