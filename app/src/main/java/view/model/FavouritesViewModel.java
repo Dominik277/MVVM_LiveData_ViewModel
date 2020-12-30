@@ -1,8 +1,10 @@
 package view.model;
 
 import android.app.Application;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,7 +72,19 @@ public class FavouritesViewModel extends AndroidViewModel {
     }
 
     public Favourites addFav(String url, long date){
+        Log.d("API123","addFav" + url);
 
+        SQLiteDatabase db = mFavHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DbSettings.DBEntry.COL_FAV_URL, url);
+        values.put(DbSettings.DBEntry.COL_FAV_DATE, date);
+        long id = db.insertWithOnConflict(DbSettings.DBEntry.TABLE,
+                null,
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
+        Favourites fav = new Favourites(id,url,date);
+        return new Favourites(fav);
     }
 
     public void removeFav(long id){
