@@ -3,6 +3,7 @@ package view.model;
 import android.app.Application;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -32,6 +33,13 @@ public class FavouritesViewModel extends AndroidViewModel {
     }
 
     public void createDummyList(){
+
+        addFav("https://www.journaldev.com",(new Date()).getTime());
+        addFav("https://www.medium.com",(new Date()).getTime());
+        addFav("https://www.reddit.com",(new Date()).getTime());
+        addFav("https://www.github.com",(new Date()).getTime());
+        addFav("https://www.hackerrank.com",(new Date()).getTime());
+        addFav("https://www.developers.android.com",(new Date()).getTime());
 
     }
 
