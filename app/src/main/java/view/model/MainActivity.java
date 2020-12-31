@@ -10,9 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.Date;
 import java.util.List;
 import androidx.annotation.NonNull;
